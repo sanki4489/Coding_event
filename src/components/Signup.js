@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Signup = () => {
   return (
@@ -17,7 +17,8 @@ const Signup = () => {
               required
             />
           </div>
-          <div className="mb-3">cpassword
+          <div className="mb-3">
+            cpassword
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
