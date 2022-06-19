@@ -12,9 +12,11 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/problem", require("./routes/problems"));
+app.use("/api/code", require("./routes/codes"));
 
 app.get("/", (req, res) => {
-  res.send("Coding event api");
+  res.send("Welcome to Coding event api");
 });
 
 app.listen(port, () => {
