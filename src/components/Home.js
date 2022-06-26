@@ -1,13 +1,12 @@
 import React from "react";
-import Codearea from "./Codearea";
+import Problems from "./Problems";
 
 const Home = () => {
   return (
     <div className="container">
-      <h1>Welcome to Coding Event !</h1>
-
+      {/* <h1>Welcome to Coding Event !</h1> */}
       <div className="container">
-        <Codearea />
+        <Problems />
       </div>
     </div>
   );

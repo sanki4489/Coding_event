@@ -1,5 +1,6 @@
 const express = require("express");
 const connectToMongo = require("./db");
+const cors = require("cors");
 require("dotenv").config();
 
 // connected to database
@@ -10,6 +11,7 @@ const port = process.env.PORT || 5000;
 
 // json middle ware
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/problem", require("./routes/problems"));
