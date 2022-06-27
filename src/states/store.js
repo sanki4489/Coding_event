@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
-import reducers from "./reducers";
+import reducers from "./reducers/index";
 
 // export const store = createStore(reducers, applyMiddleware(thunk));
 export const store = configureStore(
@@ -9,10 +9,3 @@ export const store = configureStore(
   {},
   applyMiddleware(thunk)
 );
-// export const store = configureStore({
-//   reducer: reducers,
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false,
-//     }),
-// });
