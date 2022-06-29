@@ -13,20 +13,19 @@ const Problems = () => {
   let problems = [];
   useEffect(() => {
     fetchProblems();
-  });
+    // eslint-disable-next-line
+  }, []);
 
-  let problemsState = useSelector((state) => state.problem);
-  console.log(problemsState);
-  // problems = problemsState.problems;
+  problems = useSelector((state) => state.problem);
 
   return (
     <div>
       <h2 className="my-3"> Problems for you !</h2>
 
       <div className="row">
-        {problems.length === 0 && "No problems"}
+        {problems !== [] ? problems.length === "No problems" : null}
         {problems.map((problem) => {
-          return <ProblemItem problem={problem} />;
+          return <ProblemItem key={problem._id} problem={problem} />;
         })}
       </div>
     </div>
