@@ -5,14 +5,22 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../states/actionCreators";
 import CodeEditor from "./CodeEditor";
 import { useSelector } from "react-redux/es/exports";
+import Output from "./Output";
+import { useNavigate } from "react-router-dom";
 
 const Dahboard = () => {
   const dispatch = useDispatch();
   const { fetchProblems } = bindActionCreators(actionCreators, dispatch);
 
+  const navigate = useNavigate();
+
   let problems = [];
   useEffect(() => {
-    fetchProblems();
+    if (localStorage.getItem("token")) {
+      fetchProblems();
+    } else {
+      navigate("/login");
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -27,6 +35,7 @@ const Dahboard = () => {
         Question : -{problems.length > 0 ? problems[questionNo].question : null}
       </h2>
       <CodeEditor />
+      <Output />
     </div>
   );
 };
