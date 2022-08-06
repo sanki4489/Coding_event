@@ -1,10 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  let navigate = useNavigate();
+  // handle submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (credentials.cpassword === credentials.password) {
+      const url = "http://localhost:5500/api/auth/signup";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      });
+      const json = await response.json();
+      console.log(json);
+      if (json.hasOwnProperty("authtoken")) {
+        localStorage.setItem("token", json.authtoken);
+        navigate("/");
+      } else {
+        alert(json.msg);
+      }
+    } else {
+      alert("Password and confirm password doesnot match");
+    }
+  };
+
+  const [credentials, setcredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+
+  const onChange = (e) => {
+    setcredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
   return (
     <div>
       <div className="container">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Name
@@ -14,11 +56,11 @@ const Signup = () => {
               className="form-control"
               name="name"
               id="name"
+              onChange={onChange}
               required
             />
           </div>
           <div className="mb-3">
-            cpassword
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
@@ -28,6 +70,7 @@ const Signup = () => {
               name="email"
               id="email"
               aria-describedby="emailHelp"
+              onChange={onChange}
               required
             />
           </div>
@@ -41,12 +84,13 @@ const Signup = () => {
               name="password"
               id="password"
               minLength="8"
+              onChange={onChange}
               required
             />
           </div>
           <div className="mb-3">
             <label htmlFor="cpassword" className="form-label">
-              Password
+              Confirm Password
             </label>
             <input
               type="password"
@@ -54,10 +98,11 @@ const Signup = () => {
               name="cpassword"
               id="cpassword"
               minLength="8"
+              onChange={onChange}
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary" required>
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </form>

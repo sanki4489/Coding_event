@@ -12,7 +12,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 router.post(
   "/signup",
   [
-    body("name", "Name should be atleast 5 characters!").isLength({ min: 5 }),
+    body("name", "Name cannot be empty!").exists(),
     body("email", "Please enter a valid email").isEmail(),
     body("password", "password should be atleast be 8 characters").isLength({
       min: 8,
