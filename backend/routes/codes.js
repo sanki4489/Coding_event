@@ -3,6 +3,7 @@ const fetchuser = require("../middleware/fetchuser");
 const router = express.Router();
 const Code = require("../models/Codes");
 const { body, validationResult } = require("express-validator");
+const axios = require("axios");
 
 // Route 1: Add code
 router.post(
@@ -104,5 +105,39 @@ router.delete("/deletecode/:id", fetchuser, async (req, res) => {
     return res.status(500).send("Internal server error !");
   }
 });
+
+// Route 5: Run code
+router.post(
+  "/runcode/:problemid",
+  fetchuser,
+  [
+    body("solution", "Solution cannot be blank").exists(),
+    body("language", "Please give a valid language").exists(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      const { solution, language } = req.body;
+      // API call to the compiler
+      const API_URL = "https://codex-api.herokuapp.com/";
+      const API_RESPONSE = await axios.post(
+        API_URL,
+        JSON.stringify({
+          code: solution,
+          language: language,
+          input: "",
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      );
+      return res.status(200).json(API_RESPONSE.data);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send("Internal server error !");
+    }
+  }
+);
 
 module.exports = router;
