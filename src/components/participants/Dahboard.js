@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../states/actionCreators";
 import CodeEditor from "./CodeEditor";
 import { useSelector } from "react-redux/es/exports";
-import Output from "./Output";
 import { useNavigate } from "react-router-dom";
 
 const Dahboard = () => {
@@ -35,7 +34,6 @@ const Dahboard = () => {
         Question : -{problems.length > 0 ? problems[questionNo].question : null}
       </h2>
       <CodeEditor />
-      <Output />
     </div>
   );
 };
